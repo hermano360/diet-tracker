@@ -13,9 +13,36 @@ export async function handler(request, context) {
       SK: `settings#userId#${userId}`,
     });
 
+    if (!record) {
+      return {
+        statusCode: 404,
+      };
+    }
+
+    const {
+      weight,
+      gender,
+      strategy,
+      lastMealTime,
+      calories,
+      carbs,
+      protein,
+      fat,
+    } = record;
+
     return {
       statusCode: 200,
-      body: JSON.stringify(record),
+      body: JSON.stringify({
+        weight,
+        gender,
+        strategy,
+        lastMealTime,
+        calories,
+        carbs,
+        protein,
+        fat,
+        userId: record.userId,
+      }),
     };
   } catch (err) {
     console.error(err);
