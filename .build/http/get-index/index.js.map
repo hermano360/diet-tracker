@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/http/get-index/index.ts"],
+  "sourcesContent": ["import { Context, APIGatewayProxyResult, APIGatewayEvent } from 'aws-lambda'\n\nexport const handler = async (event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult> => {\n  console.log('Event:', event)\n  console.log('Context:', context)\n  return { statusCode: 200, body: JSON.stringify({ message: 'Hello world!' }) }\n}"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAEO,IAAM,UAAU,OAAO,OAAwB,YAAqD;AACzG,UAAQ,IAAI,UAAU,KAAK;AAC3B,UAAQ,IAAI,YAAY,OAAO;AAC/B,SAAO,EAAE,YAAY,KAAK,MAAM,KAAK,UAAU,EAAE,SAAS,eAAe,CAAC,EAAE;AAC9E;",
+  "names": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "diet-tracker-backend",
+  "version": "0.0.0",
+  "description": "A fresh new Architect project!",
+  "scripts": {
+    "start": "npx sandbox"
+  },
+  "devDependencies": {
+    "@architect/architect": "^11.0.13"
+  },
+  "dependencies": {
+    "@architect/functions": "^8.1.6"
+  }
+}
