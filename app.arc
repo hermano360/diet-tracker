@@ -6,6 +6,9 @@ get /
 get /settings/:userId
 post /settings/:userId
 put /settings/:userId
+get /notifications/:userId
+post /notifications/:userId
+put /notifications/:userId
 
 @tables
 DietTrackerTable # adds Dynamodb table

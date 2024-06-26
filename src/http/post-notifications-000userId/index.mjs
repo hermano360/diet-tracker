@@ -1,7 +1,7 @@
 import arc from "@architect/functions";
-import { getSettingsKeys } from "../../utils/dynamodb.js";
+import { getNotificationKeys } from "../../utils/dynamodb.js";
 
-export async function handler(request, context) {
+export async function handler(request) {
   let client = await arc.tables();
   let DietTrackerTable = client.DietTrackerTable;
 
@@ -11,30 +11,18 @@ export async function handler(request, context) {
   try {
     const body = JSON.parse(request.body);
 
-    const {
-      weight,
-      gender,
-      strategy,
-      lastMealTime,
-      calories,
-      carbs,
-      protein,
-      fat,
-    } = body;
+    const { myFitnessPal, myFitnessPalVerified, phone, allowText, allowEmail } =
+      body;
 
-    const settingsTableKeys = getSettingsKeys(userId);
+    const notificationTableKeys = getNotificationKeys(userId);
 
     await DietTrackerTable.put({
-      ...settingsTableKeys,
-      weight,
-      gender,
-      strategy,
-      lastMealTime,
-      calories,
-      carbs,
-      protein,
-      fat,
-      userId,
+      ...notificationTableKeys,
+      myFitnessPal,
+      myFitnessPalVerified,
+      phone,
+      allowText,
+      allowEmail,
     });
 
     return {
