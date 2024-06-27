@@ -1,5 +1,5 @@
 import arc from "@architect/functions";
-import { getSettingsKeys } from "../../utils/dynamodb.js";
+import { getSettingsKeys } from "../../utils/dynamodb.mjs";
 
 export async function handler(request, context) {
   let client = await arc.tables();

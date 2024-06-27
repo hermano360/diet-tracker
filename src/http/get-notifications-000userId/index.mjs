@@ -1,5 +1,5 @@
 import arc from "@architect/functions";
-import { getNotificationKeys } from "../../utils/dynamodb.js";
+import { getNotificationKeys } from "../../utils/dynamodb.mjs";
 
 export async function handler(request, context) {
   let client = await arc.tables();
@@ -19,8 +19,14 @@ export async function handler(request, context) {
       };
     }
 
-    const { myFitnessPal, myFitnessPalVerified, phone, allowText, allowEmail } =
-      record;
+    const {
+      myFitnessPal,
+      myFitnessPalVerified,
+      phone,
+      allowText,
+      allowEmail,
+      email,
+    } = record;
 
     return {
       statusCode: 200,
@@ -28,6 +34,7 @@ export async function handler(request, context) {
         myFitnessPal,
         myFitnessPalVerified,
         phone,
+        email,
         allowText,
         allowEmail,
         userId: record.userId,

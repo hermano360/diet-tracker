@@ -9,6 +9,8 @@
     "@architect/architect": "^11.0.13"
   },
   "dependencies": {
-    "@architect/functions": "^8.1.6"
+    "@architect/functions": "^8.1.6",
+    "axios": "^1.7.2",
+    "node-html-parser": "^6.1.13"
   }
 }
