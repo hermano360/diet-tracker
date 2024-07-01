@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "description": "A fresh new Architect project!",
   "scripts": {
-    "start": "npx sandbox"
+    "start": "npx sandbox --env-file .env",
+    "test": "jest"
   },
   "devDependencies": {
     "@architect/architect": "^11.0.13"

@@ -15,8 +15,18 @@ export async function handler(req) {
     ReturnConsumedCapacity: "TOTAL",
   });
 
+  const records = await DietTrackerTable.query({
+    KeyConditionExpression: "PK = :pkVal AND SK > :startText",
+    ExpressionAttributeValues: {
+      ":pkVal": "foods",
+      ":startText": "food#",
+    },
+    ProjectionExpression: "foodName",
+    ReturnConsumedCapacity: "TOTAL",
+  });
+
   return {
     statusCode: 200,
-    body: JSON.stringify(Items),
+    body: JSON.stringify({ users: Items, foods: records.Items }),
   };
 }

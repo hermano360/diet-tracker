@@ -23,10 +23,5 @@ timeout 30
 concurrency 5
 
 @queues
-QueryFitnessStats
 query-user-data
-
-@scheduled
-FitnessUpdater rate(1 minute)
-diet-tracker cron(29 * * * ? *) 
 

@@ -18,6 +18,8 @@ export async function handler(req) {
 
   const users = userRecords.Items || [];
 
+  console.log(process.env);
+
   for (let { userId } of users) {
     await queue.publish({
       name: "query-user-data",
