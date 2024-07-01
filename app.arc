@@ -7,7 +7,9 @@ get /settings/:userId
 post /settings/:userId
 get /notifications/:userId
 post /notifications/:userId
-get /query-mfp
+get /trigger-fetch
+get /users
+post /users/:userId
 
 @tables
 DietTrackerTable # adds Dynamodb table
@@ -22,4 +24,9 @@ concurrency 5
 
 @queues
 QueryFitnessStats
+query-user-data
+
+@scheduled
+FitnessUpdater rate(1 minute)
+diet-tracker cron(29 * * * ? *) 
 

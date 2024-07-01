@@ -20,6 +20,8 @@ export async function handler(request, context) {
       carbs,
       protein,
       fat,
+      myFitnessPal,
+      myFitnessPalVerified,
     } = body;
 
     const settingsTableKeys = getSettingsKeys(userId);
@@ -34,6 +36,8 @@ export async function handler(request, context) {
       carbs,
       protein,
       fat,
+      myFitnessPal,
+      myFitnessPalVerified,
       userId,
     });
 

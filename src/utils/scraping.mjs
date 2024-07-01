@@ -81,6 +81,8 @@ export const processMacros = (scrapingResponse) => {
     .innerText.replace(/\,/gi, "")
     .trim();
 
+  // This is the goal row on MyFitnessPal, good to have so you can
+  // add notification about mismatch
   const goals = {
     calorieGoal: parseInt(calorieGoal),
     carbsGoal: parseInt(carbsGoal),

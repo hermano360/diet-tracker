@@ -11,21 +11,12 @@ export async function handler(request) {
   try {
     const body = JSON.parse(request.body);
 
-    const {
-      myFitnessPal,
-      myFitnessPalVerified,
-      phone,
-      allowText,
-      allowEmail,
-      email,
-    } = body;
+    const { phone, allowText, allowEmail, email } = body;
 
     const notificationTableKeys = getNotificationKeys(userId);
 
     await DietTrackerTable.put({
       ...notificationTableKeys,
-      myFitnessPal,
-      myFitnessPalVerified,
       phone,
       email,
       allowText,
