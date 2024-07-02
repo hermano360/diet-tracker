@@ -1,3 +1,5 @@
+import { batchSave } from "./dynamodb.mjs";
+
 const FAT_FACTOR = 9;
 const CARB_FACTOR = 4;
 const PROTEIN_FACTOR = 4;
@@ -98,6 +100,16 @@ export const generateSavedFoodEntries = (
   );
 
   return uniqueEntries;
+};
+
+export const saveFoodEntries = async (diaryEntries, userId, dateFetched) => {
+  const entriesToSave = generateSavedFoodEntries(
+    diaryEntries,
+    userId,
+    dateFetched
+  );
+
+  await batchSave(entriesToSave);
 };
 
 // processDiaryEntries sample data

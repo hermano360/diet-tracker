@@ -14,6 +14,10 @@ export const getUsersKeys = (userId) => ({
   PK: `users`,
   SK: `userId#${userId}`,
 });
+export const getMFPVerificationKeys = (userId) => ({
+  PK: `verifyMFP`,
+  SK: `verified#${userId}`,
+});
 
 const separateByBatches = (entries = []) => {
   const lists = [[]];
@@ -37,7 +41,6 @@ export const batchSave = async (entries = []) => {
   let DietTrackerTable = client.DietTrackerTable;
 
   for (let entry of entries) {
-    console.log(entry);
     await DietTrackerTable.put(entry);
   }
 };

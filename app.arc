@@ -10,6 +10,8 @@ post /notifications/:userId
 get /trigger-fetch
 get /users
 post /users/:userId
+get /verify/:username
+post /verify/:username
 
 @tables
 DietTrackerTable # adds Dynamodb table
@@ -24,4 +26,5 @@ concurrency 5
 
 @queues
 query-user-data
+verify-mfp-profile
 

@@ -31,6 +31,17 @@ export const fetchScraping = (myFitnessPal) => {
 
 export const processMacros = (scrapingResponse) => {
   const root = parse(scrapingResponse);
+
+  const mainTitle = root.querySelector(".main-title");
+
+  if (mainTitle && mainTitle.innerText.includes("Private")) {
+    return {
+      isPrivate: true,
+      diaryEntries: [],
+      dateFetched: "",
+      goals: {},
+    };
+  }
   const diaryTable = root.querySelector("#diary-table tbody");
   const diaryRows = diaryTable.querySelectorAll("tr");
   const diaryEntries = diaryRows
@@ -86,7 +97,7 @@ export const processMacros = (scrapingResponse) => {
     `#date_controls input[name="hidden_date_selector"]`
   ).attributes.value;
 
-  return { diaryEntries, goals, dateFetched };
+  return { diaryEntries, goals, dateFetched, isPrivate: false };
 };
 export const sampleScraping = () => {
   return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" class="lang-en js-enabled"><head><meta http-equiv="origin-trial" content="Az520Inasey3TAyqLyojQa8MnmCALSEU29yQFW8dePZ7xQTvSt73pHazLFTK5f7SyLUJSo2uKLesEtEa9aUYcgMAAACPeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IkRpc2FibGVUaGlyZFBhcnR5U3RvcmFnZVBhcnRpdGlvbmluZyIsImV4cGlyeSI6MTcyNTQwNzk5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0=">
