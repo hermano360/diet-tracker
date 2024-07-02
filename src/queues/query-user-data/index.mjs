@@ -4,19 +4,12 @@ import {
   getNotificationKeys,
   getSettingsKeys,
 } from "../../utils/dynamodb.mjs";
-import {
-  fetchScraping,
-  sampleScraping,
-  processMacros,
-} from "../../utils/scraping.mjs";
+import { sampleScraping, processMacros } from "../../utils/scraping.mjs";
 import {
   compareMacros,
-  generateComparisonText,
   generateSavedFoodEntries,
   processDiaryEntries,
 } from "../../utils/dietary.mjs";
-
-// learn more about queue functions here: https://arc.codes/queues
 
 export async function handler(event, rest) {
   let client = await arc.tables();
@@ -72,7 +65,7 @@ export async function handler(event, rest) {
     const notificationData = await DietTrackerTable.get(notificationKeys);
 
     if (notificationData.phone && notificationData.allowText) {
-      console.log("Texting");
+      console.log({ Texting: "Texting" });
     }
 
     if (notificationData.email && notificationData.allowEmail) {

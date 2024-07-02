@@ -19,6 +19,10 @@ export const getMFPVerificationKeys = (userId) => ({
   SK: `verified#${userId}`,
 });
 
+export const getFoodKeys = () => ({
+  PK: `foods`,
+});
+
 const separateByBatches = (entries = []) => {
   const lists = [[]];
 

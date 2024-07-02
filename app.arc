@@ -12,6 +12,7 @@ get /users
 post /users/:userId
 get /verify/:username
 post /verify/:username
+get /foods/:username
 
 @tables
 DietTrackerTable # adds Dynamodb table
