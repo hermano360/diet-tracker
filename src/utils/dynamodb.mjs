@@ -35,21 +35,9 @@ const separateByBatches = (entries = []) => {
 export const batchSave = async (entries = []) => {
   let client = await arc.tables();
   let DietTrackerTable = client.DietTrackerTable;
-  let awsClient = client._client;
 
-  const batchSet = separateByBatches(entries).map((batchMiniSet = []) => {
-    return batchMiniSet.map((entry) => ({
-      PutRequest: {
-        Item: entry,
-      },
-    }));
-  });
-
-  for (let batch of batchSet) {
-    await awsClient.BatchWriteItem({
-      RequestItems: {
-        ["DietTrackerTable"]: batch,
-      },
-    });
+  for (let entry of entries) {
+    console.log(entry);
+    await DietTrackerTable.put(entry);
   }
 };
