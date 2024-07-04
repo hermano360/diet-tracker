@@ -1,10 +1,9 @@
 import arc from "@architect/functions";
-import { getUsersKeys } from "../../utils/dynamodb.mjs";
-import { v4 as uuid } from "uuid";
+import { getUsersKeys } from "../../utils/db-keys.mjs";
 
-export async function handler(request, context) {
-  let client = await arc.tables();
-  let DietTrackerTable = client.DietTrackerTable;
+export async function handler(request) {
+  const client = await arc.tables();
+  const DietTrackerTable = client.DietTrackerTable;
 
   const { pathParameters } = request;
   const { userId } = pathParameters;

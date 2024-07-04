@@ -5,7 +5,7 @@ export async function handler(req) {
   let client = await arc.tables();
   let DietTrackerTable = client.DietTrackerTable;
 
-  const { Items = [] } = await DietTrackerTable.query({
+  const { Items: users = [] } = await DietTrackerTable.query({
     KeyConditionExpression: "PK = :pkVal AND SK > :startText",
     ExpressionAttributeValues: {
       ":pkVal": "users",
@@ -17,6 +17,6 @@ export async function handler(req) {
 
   return {
     statusCode: 200,
-    body: JSON.stringify({ users: Items }),
+    body: JSON.stringify({ users }),
   };
 }
