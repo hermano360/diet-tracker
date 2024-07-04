@@ -3,13 +3,13 @@ diet-tracker-backend
 
 @http
 get /
-get /settings/:userId
+post /users/:userId
 post /settings/:userId
+get /settings/:userId
 get /notifications/:userId
 post /notifications/:userId
 get /trigger-fetch
 get /users
-post /users/:userId
 get /verify/:username
 post /verify/:username
 get /foods/:username

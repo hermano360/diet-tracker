@@ -1,9 +1,9 @@
 import arc from "@architect/functions";
-import { getSettingsKeys } from "../../utils/dynamodb.mjs";
+import { getSettingsKeys } from "../../utils/db-keys.mjs";
 
-export async function handler(request, context) {
-  let client = await arc.tables();
-  let DietTrackerTable = client.DietTrackerTable;
+export async function handler(request) {
+  const client = await arc.tables();
+  const DietTrackerTable = client.DietTrackerTable;
 
   const { pathParameters } = request;
   const { userId } = pathParameters;
@@ -19,16 +19,7 @@ export async function handler(request, context) {
       };
     }
 
-    const {
-      weight,
-      gender,
-      strategy,
-      lastMealTime,
-      calories,
-      carbs,
-      protein,
-      fat,
-    } = record;
+    const { weight, gender, strategy, calories, carbs, protein, fat } = record;
 
     return {
       statusCode: 200,
@@ -36,7 +27,6 @@ export async function handler(request, context) {
         weight,
         gender,
         strategy,
-        lastMealTime,
         calories,
         carbs,
         protein,

@@ -1,7 +1,7 @@
 import arc from "@architect/functions";
-import { getSettingsKeys } from "../../utils/dynamodb.mjs";
+import { getSettingsKeys } from "../../utils/db-keys.mjs";
 
-export async function handler(request, context) {
+export async function handler(request) {
   let client = await arc.tables();
   let DietTrackerTable = client.DietTrackerTable;
 
@@ -11,18 +11,7 @@ export async function handler(request, context) {
   try {
     const body = JSON.parse(request.body);
 
-    const {
-      weight,
-      gender,
-      strategy,
-      lastMealTime,
-      calories,
-      carbs,
-      protein,
-      fat,
-      myFitnessPal,
-      myFitnessPalVerified,
-    } = body;
+    const { weight, gender, strategy, calories, carbs, protein, fat } = body;
 
     const settingsTableKeys = getSettingsKeys(userId);
 
@@ -31,19 +20,18 @@ export async function handler(request, context) {
       weight,
       gender,
       strategy,
-      lastMealTime,
       calories,
       carbs,
       protein,
       fat,
-      myFitnessPal,
-      myFitnessPalVerified,
       userId,
     });
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: "Record added" }),
+      body: JSON.stringify({
+        message: `Settings created for userId ${userId}`,
+      }),
     };
   } catch (err) {
     console.error(err);
