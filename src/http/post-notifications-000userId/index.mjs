@@ -1,5 +1,5 @@
 import arc from "@architect/functions";
-import { getNotificationKeys } from "../../utils/dynamodb.mjs";
+import { getNotificationKeys } from "../../utils/db-keys.mjs";
 
 export async function handler(request) {
   let client = await arc.tables();
@@ -11,22 +11,23 @@ export async function handler(request) {
   try {
     const body = JSON.parse(request.body);
 
-    const { phone, allowText, allowEmail, email } = body;
+    const { myFitnessPal, allowNotifications, lastMealTime } = body;
 
     const notificationTableKeys = getNotificationKeys(userId);
 
     await DietTrackerTable.put({
       ...notificationTableKeys,
-      phone,
-      email,
-      allowText,
-      allowEmail,
+      myFitnessPal,
+      allowNotifications,
+      lastMealTime,
       userId,
     });
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: "Record added" }),
+      body: JSON.stringify({
+        message: `Notifications were created for userId ${userId}`,
+      }),
     };
   } catch (err) {
     console.error(err);

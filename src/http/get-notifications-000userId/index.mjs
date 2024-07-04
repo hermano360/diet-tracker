@@ -1,7 +1,7 @@
 import arc from "@architect/functions";
-import { getNotificationKeys } from "../../utils/dynamodb.mjs";
+import { getNotificationKeys } from "../../utils/db-keys.mjs";
 
-export async function handler(request, context) {
+export async function handler(request) {
   let client = await arc.tables();
   let DietTrackerTable = client.DietTrackerTable;
 
@@ -19,24 +19,14 @@ export async function handler(request, context) {
       };
     }
 
-    const {
-      myFitnessPal,
-      myFitnessPalVerified,
-      phone,
-      allowText,
-      allowEmail,
-      email,
-    } = record;
+    const { myFitnessPal, allowNotifications, lastMealTime } = record;
 
     return {
       statusCode: 200,
       body: JSON.stringify({
         myFitnessPal,
-        myFitnessPalVerified,
-        phone,
-        email,
-        allowText,
-        allowEmail,
+        allowNotifications,
+        lastMealTime,
         userId: record.userId,
       }),
     };

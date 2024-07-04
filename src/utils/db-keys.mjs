@@ -7,3 +7,8 @@ export const getSettingsKeys = (userId) => ({
   PK: `settings`,
   SK: `settings#userId#${userId}`,
 });
+
+export const getNotificationKeys = (userId) => ({
+  PK: `notifications`,
+  SK: `notifications#userId#${userId}`,
+});
