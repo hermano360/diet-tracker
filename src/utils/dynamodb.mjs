@@ -14,7 +14,7 @@ export const getUsersKeys = (userId) => ({
   PK: `users`,
   SK: `userId#${userId}`,
 });
-export const getMFPVerificationKeys = (userId) => ({
+export const getVerificationKeys = (userId) => ({
   PK: `verifyMFP`,
   SK: `verified#${userId}`,
 });

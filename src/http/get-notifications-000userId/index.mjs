@@ -2,8 +2,8 @@ import arc from "@architect/functions";
 import { getNotificationKeys } from "../../utils/db-keys.mjs";
 
 export async function handler(request) {
-  let client = await arc.tables();
-  let DietTrackerTable = client.DietTrackerTable;
+  const client = await arc.tables();
+  const DietTrackerTable = client.DietTrackerTable;
 
   const { pathParameters } = request;
   const { userId } = pathParameters;

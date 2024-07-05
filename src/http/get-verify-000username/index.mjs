@@ -1,14 +1,14 @@
 import arc from "@architect/functions";
-import { getMFPVerificationKeys } from "../../utils/dynamodb.mjs";
+import { getVerificationKeys } from "../../utils/db-keys.mjs";
 
 export async function handler(request) {
-  let client = await arc.tables();
-  let DietTrackerTable = client.DietTrackerTable;
+  const client = await arc.tables();
+  const DietTrackerTable = client.DietTrackerTable;
 
   const { pathParameters } = request;
   const { username } = pathParameters;
 
-  const verificationKeys = getMFPVerificationKeys(username);
+  const verificationKeys = getVerificationKeys(username);
 
   try {
     const record = await DietTrackerTable.get(verificationKeys);
@@ -22,10 +22,10 @@ export async function handler(request) {
 
       return {
         statusCode: 200,
-        body: {
+        body: JSON.stringify({
           username,
           status: "UNVERIFIED",
-        },
+        }),
       };
     }
 

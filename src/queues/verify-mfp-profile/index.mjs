@@ -1,30 +1,43 @@
-import { generateSavedFoodEntries } from "../../utils/dietary.mjs";
-import { getMFPVerificationKeys } from "../../utils/dynamodb.mjs";
-import { processMacros } from "../../utils/scraping.mjs";
+import arc from "@architect/functions";
+import { getVerificationKeys } from "../../utils/db-keys.mjs";
 
-// learn more about queue functions here: https://arc.codes/queues
 export async function handler(event) {
   const { Records = [] } = event;
+  let client = await arc.tables();
+  let DietTrackerTable = client.DietTrackerTable;
 
-  for (let { body = {} } of Records) {
-    const userHandle = JSON.parse(body);
+  console.log(Records);
+  for (let record of Records) {
+    const username = JSON.parse(record.body);
 
-    const verificationKeys = getMFPVerificationKeys(userHandle);
+    const verificationKeys = getVerificationKeys(username);
 
     try {
-      await DietTrackerTable.put({ ...verificationKeys, status: "UNVERIFIED" });
+      await DietTrackerTable.put({
+        ...verificationKeys,
+        username,
+        status: "UNVERIFIED",
+      });
 
-      const response = sampleScraping();
+      // We will be adding verification logic at a later portion
 
-      const { diaryEntries, dateFetched, isPrivate } = processMacros(response);
+      await DietTrackerTable.put({
+        ...verificationKeys,
+        username,
+        status: "VERIFIED",
+      });
 
-      if (isPrivate) {
-        await DietTrackerTable.put({ ...verificationKeys, status: "PRIVATE" });
+      // const response = sampleScraping();
 
-        return;
-      }
+      // const { diaryEntries, dateFetched, isPrivate } = processMacros(response);
 
-      await saveFoodEntries(diaryEntries, userHandle, dateFetched);
+      // if (isPrivate) {
+      //   await DietTrackerTable.put({ ...verificationKeys, status: "PRIVATE" });
+
+      //   return;
+      // }
+
+      // await saveFoodEntries(diaryEntries, userHandle, dateFetched);
     } catch (err) {
       console.log(err);
     }

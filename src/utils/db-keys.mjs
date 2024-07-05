@@ -12,3 +12,8 @@ export const getNotificationKeys = (userId) => ({
   PK: `notifications`,
   SK: `notifications#userId#${userId}`,
 });
+
+export const getVerificationKeys = (userId) => ({
+  PK: `verify`,
+  SK: `verified#${userId}`,
+});

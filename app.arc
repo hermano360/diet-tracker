@@ -4,14 +4,14 @@ diet-tracker-backend
 @http
 get /
 post /users/:userId
-post /settings/:userId
 get /settings/:userId
+post /settings/:userId
 get /notifications/:userId
 post /notifications/:userId
-get /trigger-fetch
-get /users
 get /verify/:username
 post /verify/:username
+get /trigger-fetch
+get /users
 get /foods/:username
 
 @tables
