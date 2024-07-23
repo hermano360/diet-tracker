@@ -13,6 +13,7 @@ post /verify/:username
 get /trigger-fetch
 get /users
 get /foods/:username
+post /generate-macros
 
 @tables
 DietTrackerTable # adds Dynamodb table
