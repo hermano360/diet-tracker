@@ -19,14 +19,14 @@ export async function handler(request) {
       };
     }
 
-    const { myFitnessPal, allowNotifications, lastMealTime } = record;
+    const { myFitnessPal, allowNotifications, alertTime } = record;
 
     return {
       statusCode: 200,
       body: JSON.stringify({
         myFitnessPal,
         allowNotifications,
-        lastMealTime,
+        alertTime,
         userId: record.userId,
       }),
     };

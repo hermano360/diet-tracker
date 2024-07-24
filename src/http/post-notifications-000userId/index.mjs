@@ -11,7 +11,7 @@ export async function handler(request) {
   try {
     const body = JSON.parse(request.body);
 
-    const { myFitnessPal, allowNotifications, lastMealTime } = body;
+    const { myFitnessPal, allowNotifications, alertTime } = body;
 
     const notificationTableKeys = getNotificationKeys(userId);
 
@@ -19,7 +19,7 @@ export async function handler(request) {
       ...notificationTableKeys,
       myFitnessPal,
       allowNotifications,
-      lastMealTime,
+      alertTime,
       userId,
     });
 
