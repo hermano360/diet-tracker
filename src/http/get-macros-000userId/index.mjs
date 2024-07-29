@@ -1,5 +1,5 @@
 import arc from "@architect/functions";
-import { getNotificationKeys } from "../../utils/db-keys.mjs";
+import { getMacrosKeys } from "../../utils/db-keys.mjs";
 
 export async function handler(request) {
   const client = await arc.tables();
@@ -8,25 +8,26 @@ export async function handler(request) {
   const { pathParameters } = request;
   const { userId } = pathParameters;
 
-  const notificationTableKeys = getNotificationKeys(userId);
+  const settingsTableKeys = getMacrosKeys(userId);
 
   try {
-    const record = await DietTrackerTable.get(notificationTableKeys);
+    const record = await DietTrackerTable.get(settingsTableKeys);
 
     if (!record) {
       return {
-        message: "User not found.",
+        statusCode: 404,
       };
     }
 
-    const { myFitnessPal, allowNotifications, alertTime } = record;
+    const { calories, carbs, protein, fat } = record;
 
     return {
       statusCode: 200,
       body: JSON.stringify({
-        myFitnessPal,
-        allowNotifications,
-        alertTime,
+        calories,
+        carbs,
+        protein,
+        fat,
         userId: record.userId,
       }),
     };

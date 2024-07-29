@@ -7,6 +7,10 @@ export const getSettingsKeys = (userId) => ({
   PK: `settings`,
   SK: `settings#userId#${userId}`,
 });
+export const getMacrosKeys = (userId) => ({
+  PK: `macros`,
+  SK: `macros#userId#${userId}`,
+});
 
 export const getNotificationKeys = (userId) => ({
   PK: `notifications`,

@@ -19,7 +19,7 @@ export async function handler(request) {
       };
     }
 
-    const { weight, gender, strategy, calories, carbs, protein, fat } = record;
+    const { weight, gender, strategy } = record;
 
     return {
       statusCode: 200,
@@ -27,10 +27,6 @@ export async function handler(request) {
         weight,
         gender,
         strategy,
-        calories,
-        carbs,
-        protein,
-        fat,
         userId: record.userId,
       }),
     };

@@ -1,5 +1,5 @@
 import arc from "@architect/functions";
-import { getSettingsKeys } from "../../utils/db-keys.mjs";
+import { getMacrosKeys } from "../../utils/db-keys.mjs";
 
 export async function handler(request) {
   let client = await arc.tables();
@@ -11,22 +11,23 @@ export async function handler(request) {
   try {
     const body = JSON.parse(request.body);
 
-    const { weight, gender, strategy } = body;
+    const { calories, carbs, protein, fat } = body;
 
-    const settingsTableKeys = getSettingsKeys(userId);
+    const settingsTableKeys = getMacrosKeys(userId);
 
     await DietTrackerTable.put({
       ...settingsTableKeys,
-      weight,
-      gender,
-      strategy,
+      calories,
+      carbs,
+      protein,
+      fat,
       userId,
     });
 
     return {
       statusCode: 200,
       body: JSON.stringify({
-        message: `Settings created for userId ${userId}`,
+        message: `Macros created for userId ${userId}`,
       }),
     };
   } catch (err) {

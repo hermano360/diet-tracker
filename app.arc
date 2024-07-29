@@ -6,6 +6,8 @@ get /
 post /users/:userId
 get /settings/:userId
 post /settings/:userId
+get /macros/:userId
+post /macros/:userId
 get /notifications/:userId
 post /notifications/:userId
 get /verify/:username
