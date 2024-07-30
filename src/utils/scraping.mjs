@@ -2,6 +2,7 @@ import axios from "axios";
 import { parse } from "node-html-parser";
 
 export const fetchScraping = (myFitnessPal) => {
+  console.log(`Fetching diary for ${myFitnessPal}`);
   return new Promise((resolve, reject) => {
     axios
       .get("https://app.scrapingbee.com/api/v1/", {
@@ -16,6 +17,7 @@ export const fetchScraping = (myFitnessPal) => {
         },
       })
       .then(function (response) {
+        console.log(response.data);
         resolve(response.data);
       })
       .catch((err) => {
@@ -42,6 +44,7 @@ export const processMacros = (scrapingResponse) => {
       goals: {},
     };
   }
+
   const diaryTable = root.querySelector("#diary-table tbody");
   const diaryRows = diaryTable.querySelectorAll("tr");
   const diaryEntries = diaryRows
@@ -97,6 +100,7 @@ export const processMacros = (scrapingResponse) => {
     `#date_controls input[name="hidden_date_selector"]`
   ).attributes.value;
 
+  console.log({ diaryEntries, goals, dateFetched, isPrivate: false });
   return { diaryEntries, goals, dateFetched, isPrivate: false };
 };
 export const sampleScraping = () => {

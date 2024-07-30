@@ -1,9 +1,7 @@
 import arc from "@architect/functions";
-import { getNotificationKeys } from "../../utils/db-keys.mjs";
 
 export async function handler(request) {
-  let client = await arc.tables();
-  let DietTrackerTable = client.DietTrackerTable;
+  const queue = await arc.queues;
 
   const { pathParameters } = request;
   const { userId } = pathParameters;
@@ -13,20 +11,15 @@ export async function handler(request) {
 
     const { myFitnessPal, allowNotifications, alertTime } = body;
 
-    const notificationTableKeys = getNotificationKeys(userId);
-
-    await DietTrackerTable.put({
-      ...notificationTableKeys,
-      myFitnessPal,
-      allowNotifications,
-      alertTime,
-      userId,
+    await queue.publish({
+      name: "verify-mfp-profile",
+      payload: { userId, myFitnessPal, allowNotifications, alertTime },
     });
 
     return {
       statusCode: 200,
       body: JSON.stringify({
-        message: `Notifications were created for userId ${userId}`,
+        message: `Request for profile verification was initiated for ${userId}`,
       }),
     };
   } catch (err) {

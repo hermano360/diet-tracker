@@ -1,23 +1,24 @@
 import arc from "@architect/functions";
 import { getFoodKeys } from "../../utils/dynamodb.mjs";
+import { getNotificationKeys } from "../../utils/db-keys.mjs";
 
 export async function handler(request, context) {
   let client = await arc.tables();
   let DietTrackerTable = client.DietTrackerTable;
 
   const { pathParameters } = request;
-  const { username } = pathParameters;
+  const { userId } = pathParameters;
 
-  const foodKeys = getFoodKeys(username);
+  const foodKeys = getFoodKeys(userId);
 
   const dateNow = new Date().toISOString().split("T")[0];
 
   try {
     const { Items = [] } = await DietTrackerTable.query({
-      KeyConditionExpression: "PK = :pkVal AND SK <= :startText",
+      KeyConditionExpression: "PK = :pkVal AND begins_with(SK, :startText)",
       ExpressionAttributeValues: {
         ":pkVal": foodKeys.PK,
-        ":startText": `result#${username}#${dateNow}`,
+        ":startText": `food#${userId}#${dateNow}`,
       },
       ReturnConsumedCapacity: "TOTAL",
       ScanIndexForward: false,

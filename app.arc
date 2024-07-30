@@ -10,10 +10,11 @@ get /macros/:userId
 post /macros/:userId
 get /notifications/:userId
 post /notifications/:userId
-get /verify/:username
-post /verify/:username
+get /verify/:userId
+post /verify/:userId
 get /trigger-fetch
 get /users
+get /todays-food/:userId
 get /foods/:username
 post /generate-macros
 
@@ -25,7 +26,7 @@ DietTrackerTable # adds Dynamodb table
 @aws
 # profile default
 region us-east-1
-timeout 60
+timeout 240
 concurrency 5
 
 @queues

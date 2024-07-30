@@ -3,11 +3,14 @@ import arc from "@architect/functions";
 export async function handler(request) {
   const queue = await arc.queues;
   const { pathParameters } = request;
-  const { username } = pathParameters;
+
+  const { userId } = pathParameters;
+
+  const { username } = JSON.parse(request.body);
 
   await queue.publish({
     name: "verify-mfp-profile",
-    payload: username,
+    payload: { username, userId },
   });
 
   return {

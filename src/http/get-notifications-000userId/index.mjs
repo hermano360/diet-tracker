@@ -19,7 +19,8 @@ export async function handler(request) {
       };
     }
 
-    const { myFitnessPal, allowNotifications, alertTime } = record;
+    const { myFitnessPal, allowNotifications, alertTime, usernameStatus } =
+      record;
 
     return {
       statusCode: 200,
@@ -27,6 +28,7 @@ export async function handler(request) {
         myFitnessPal,
         allowNotifications,
         alertTime,
+        usernameStatus,
         userId: record.userId,
       }),
     };
