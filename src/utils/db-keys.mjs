@@ -21,3 +21,7 @@ export const getVerificationKeys = (userId) => ({
   PK: `verify`,
   SK: `verified#${userId}`,
 });
+export const getResultsKeys = (userId, date) => ({
+  PK: `results`,
+  SK: `results#${userId}#${date}`,
+});

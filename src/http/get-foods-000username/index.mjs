@@ -17,7 +17,7 @@ export async function handler(request, context) {
       KeyConditionExpression: "PK = :pkVal AND SK <= :startText",
       ExpressionAttributeValues: {
         ":pkVal": foodKeys.PK,
-        ":startText": `result#${username}#${dateNow}`,
+        ":startText": `food#${username}#${dateNow}$`,
       },
       ReturnConsumedCapacity: "TOTAL",
       ScanIndexForward: false,

@@ -11,7 +11,7 @@ export async function handler(request) {
   try {
     const body = JSON.parse(request.body);
 
-    const { weight, gender, strategy } = body;
+    const { weight, gender, strategy, age, activityLevel, height } = body;
 
     const settingsTableKeys = getSettingsKeys(userId);
 
@@ -20,6 +20,9 @@ export async function handler(request) {
       weight,
       gender,
       strategy,
+      age,
+      activityLevel,
+      height,
       userId,
     });
 

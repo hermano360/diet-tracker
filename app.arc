@@ -15,6 +15,7 @@ post /verify/:userId
 get /trigger-fetch
 get /users
 get /todays-food/:userId
+get /results/:userId/:date
 get /foods/:username
 post /generate-macros
 

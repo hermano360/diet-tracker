@@ -1,6 +1,5 @@
 import arc from "@architect/functions";
 import { getFoodKeys } from "../../utils/dynamodb.mjs";
-import { getNotificationKeys } from "../../utils/db-keys.mjs";
 
 export async function handler(request, context) {
   let client = await arc.tables();
@@ -11,26 +10,22 @@ export async function handler(request, context) {
 
   const foodKeys = getFoodKeys(userId);
 
-  const dateNow = new Date().toISOString().split("T")[0];
+  const dateNow = "2024-06-27"; // new Date().toISOString().split("T")[0];
 
   try {
     const { Items = [] } = await DietTrackerTable.query({
-      KeyConditionExpression: "PK = :pkVal AND begins_with(SK, :startText)",
+      KeyConditionExpression: "PK = :pkVal and begins_with(SK, :startText)",
       ExpressionAttributeValues: {
         ":pkVal": foodKeys.PK,
-        ":startText": `food#${userId}#${dateNow}`,
+        ":startText": `food#${userId}#${dateNow}#`,
       },
       ReturnConsumedCapacity: "TOTAL",
       ScanIndexForward: false,
-
-      Limit: 5,
     });
-
-    console.log({ Items });
 
     return {
       statusCode: 200,
-      body: JSON.stringify(Items),
+      body: JSON.stringify({ foods: Items, date: dateNow }),
     };
   } catch (err) {
     console.error(err);

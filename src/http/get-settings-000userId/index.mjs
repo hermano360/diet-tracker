@@ -19,7 +19,7 @@ export async function handler(request) {
       };
     }
 
-    const { weight, gender, strategy } = record;
+    const { weight, gender, strategy, age, activityLevel, height } = record;
 
     return {
       statusCode: 200,
@@ -27,6 +27,9 @@ export async function handler(request) {
         weight,
         gender,
         strategy,
+        age,
+        activityLevel,
+        height,
         userId: record.userId,
       }),
     };

@@ -14,7 +14,11 @@ import {
   generateSavedFoodEntries,
   processDiaryEntries,
 } from "../../utils/dietary.mjs";
-import { getVerificationKeys } from "../../utils/db-keys.mjs";
+import {
+  getMacrosKeys,
+  getResultsKeys,
+  getVerificationKeys,
+} from "../../utils/db-keys.mjs";
 
 export async function handler(event, rest) {
   let client = await arc.tables();
@@ -27,62 +31,33 @@ export async function handler(event, rest) {
 
     const notificationKeys = getNotificationKeys(userId);
     const settingsKeys = getSettingsKeys(userId);
-
+    const macrosKeys = getMacrosKeys(userId);
     const settingsData = await DietTrackerTable.get(settingsKeys);
     const notificationData = await DietTrackerTable.get(notificationKeys);
+    const macrosData = await DietTrackerTable.get(macrosKeys);
 
-    console.log({ settingsData, notificationData });
     if (!settingsData || !notificationData) {
       return;
     }
 
-    const { calories, carbs, protein, fat } = settingsData;
-
-    const { myFitnessPal, allowNotifications } = notificationData;
+    const { myFitnessPal, usernameStatus } = notificationData;
 
     if (!myFitnessPal) {
       return;
     }
 
-    const verificationKeys = getVerificationKeys(myFitnessPal);
-
-    const verificationData = await DietTrackerTable.get(verificationKeys);
-
-    if (!verificationData) {
-      return;
-    }
-
-    const { status } = verificationData;
-
-    const isMyFitnessPalVerified = status === "VERIFIED";
-
-    console.log({
-      isMyFitnessPalVerified,
-      status,
-    });
+    const isMyFitnessPalVerified = usernameStatus === "VERIFIED";
 
     if (!isMyFitnessPalVerified) {
+      console.log("My fitness pal has not been verified");
       return;
     }
 
-    console.log({
-      isMyFitnessPalVerified,
-      myFitnessPal,
-      allowNotifications,
-      calories,
-      carbs,
-      protein,
-      fat,
-    });
-
     try {
-      console.log("Beginning fetching");
       // const response = await sampleScraping(myFitnessPal);
       const response = sampleScraping();
 
       const { diaryEntries, dateFetched } = processMacros(response);
-
-      console.log({ diaryEntries, dateFetched });
 
       const entriesToSave = generateSavedFoodEntries(
         diaryEntries,
@@ -90,20 +65,29 @@ export async function handler(event, rest) {
         dateFetched
       );
 
-      console.log({ entriesToSave });
-
       await batchSave(entriesToSave);
 
       const currentResults = processDiaryEntries(diaryEntries);
 
-      const comparison = compareMacros(currentResults, {
-        calories,
-        carbs,
-        protein,
-        fat,
-      });
+      const resultsKeys = getResultsKeys(userId, dateFetched);
 
-      console.log({ comparison });
+      try {
+        await DietTrackerTable.put({
+          ...resultsKeys,
+          ...currentResults,
+          date: dateFetched,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+
+      // could be necessary to make a better decision. may just go into a separate function for clarity
+      // const comparison = compareMacros(currentResults, {
+      //   calories,
+      //   carbs,
+      //   protein,
+      //   fat,
+      // });
 
       if (notificationData.phone && notificationData.allowText) {
         console.log({ Texting: "Texting" });
