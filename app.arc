@@ -30,6 +30,9 @@ region us-east-1
 timeout 240
 concurrency 5
 
+@scheduled
+trigger-diary-fetching cron(*	23	*	*	?	*)
+
 @queues
 query-user-data
 verify-mfp-profile

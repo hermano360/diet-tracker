@@ -7,7 +7,7 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@architect/architect": "^11.0.13"
+    "@architect/architect": "^11.1.0"
   },
   "dependencies": {
     "@architect/functions": "^8.1.6",
